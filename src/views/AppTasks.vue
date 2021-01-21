@@ -4,14 +4,14 @@
     <h3 class="text-white">Всего активных задач: {{ activeTasksNumber }}</h3>
     <ul v-for="task in tasks" :key="task.title">
       <li>
-        <app-task :task="task" />
+        <task-item :task="task" />
       </li>
     </ul>
   </template>
 </template>
 
 <script>
-import AppTask from "../components/AppTask";
+import TaskItem from "../components/TaskItem";
 import localStorage from "../Service/localStorage";
 
 import { computed } from "vue";
@@ -25,12 +25,17 @@ export default {
 
     store.commit("SET_TASKS", tasksFromStorage);
 
+    const tasks = computed(() => {
+      console.log("refresh store");
+      return store.getters.tasks;
+    });
+
     return {
-      tasks: computed(() => store.getters.tasks),
+      tasks,
       activeTasksNumber: computed(() => store.getters.activeTasksNumber),
       hasTasks: computed(() => store.getters.hasTasks),
     };
   },
-  components: { AppTask },
+  components: { TaskItem },
 };
 </script>

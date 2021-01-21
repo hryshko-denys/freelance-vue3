@@ -18,20 +18,28 @@
 <script>
 import AppStatus from "../components/AppStatus";
 import { computed } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 export default {
   props: ["task"],
   setup(props) {
-    const router = useRouter()
+    const router = useRouter();
+    const store = useStore();
 
     function showTask() {
-      router.push(`/task/${props.task.id}`)
+      // console.log(props.task, 'props.task')
+      store.commit("SET_ACTIVE_TASK", props.task);
+      router.push(`/task/${props.task.id}`);
     }
+
     return {
       showTask,
       name: computed(() => props.task.name),
-      status: computed(() => props.task.status),
+      status: computed(() => {
+        console.log(props.task.status, 'status change')
+        return props.task.status
+      }),
       date: computed(() => props.task.date),
     };
   },
