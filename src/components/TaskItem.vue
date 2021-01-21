@@ -42,16 +42,16 @@ export default {
       if (answer) {
         store.commit("DELETE_TASK", props.task.id);
 
-        localStorage.updateLocalStorage(store.getters.tasks);
+        localStorage.updateLocalStorage(store.state);
       }
     }
 
     return {
       showTask,
+      deleteTask,
       name: computed(() => props.task.name),
       status: computed(() => props.task.status),
       date: computed(() => props.task.date),
-      deleteTask,
     };
   },
   components: { AppStatus },

@@ -48,8 +48,7 @@ export default {
       });
 
       router.push("/");
-
-      localStorage.updateLocalStorage(store.getters.tasks);
+      localStorage.updateLocalStorage(store.state);
     }
 
     return {

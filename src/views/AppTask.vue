@@ -41,7 +41,7 @@ export default {
         status,
       });
 
-      localStorage.updateLocalStorage(store.getters.tasks);
+      localStorage.updateLocalStorage(store.state);
     }
 
     return {

@@ -8,13 +8,13 @@ function updateLocalStorage(tasks) {
 
 function getTasksFromStorage() {
   if (localStorage.tasks) {
-    return JSON.parse(localStorage.getItem('tasks'))
+    return JSON.parse(localStorage.getItem("tasks"));
   } else {
-    return []
+    return [];
   }
 }
 
 export default {
   updateLocalStorage,
-  getTasksFromStorage
+  getTasksFromStorage,
 };

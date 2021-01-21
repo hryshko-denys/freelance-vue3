@@ -6,14 +6,17 @@ export default createStore({
     return {
       tasks: [],
       activeTask: null,
+      filterOption: "all",
     };
   },
   mutations: {
     ADD_TASK(state, payload) {
       state.tasks.push(payload);
     },
-    SET_TASKS(state, tasks) {
-      state.tasks = tasks;
+    SET_LOCALE_STORE(state, savedState) {
+      state.tasks = savedState.tasks;
+      state.activeTask = savedState.activeTask;
+      state.filterOption = savedState.filterOption;
     },
     SET_ACTIVE_TASK(state, task) {
       state.activeTask = task;
@@ -21,7 +24,7 @@ export default createStore({
     CHANGE_TASK_STATUS(state, { id, status }) {
       state.tasks = state.tasks.map((task) => {
         if (task.id === id) {
-          task.status = status
+          task.status = status;
         }
 
         return task;
@@ -36,8 +39,11 @@ export default createStore({
       };
     },
     DELETE_TASK(state, id) {
-      state.tasks = state.tasks.filter(task => task.id !== id)
-    }
+      state.tasks = state.tasks.filter((task) => task.id !== id);
+    },
+    CHANGE_FILTER_STATUS(state, filterOption) {
+      state.filterOption = filterOption;
+    },
   },
   actions: {
     createNewTask({ commit }, payload) {
@@ -47,7 +53,7 @@ export default createStore({
 
       const status = deadline < currentDate ? "cancelled" : "active";
       const id = uuidv4();
-      console.log(id);
+
       commit("ADD_TASK", { ...payload, status, id });
     },
     changeTaskStatus({ commit }, payload) {
@@ -58,6 +64,36 @@ export default createStore({
   getters: {
     tasks(state) {
       return state.tasks;
+    },
+    filteredTasks(state) {
+      let filteredTasks = state.tasks;
+      switch (state.filterOption) {
+        case "all":
+          break;
+        case "active":
+          filteredTasks = filteredTasks.filter(
+            (task) => task.status === "active"
+          );
+          break;
+        case "done":
+          filteredTasks = filteredTasks.filter(
+            (task) => task.status === "done"
+          );
+          break;
+        case "cancelled":
+          filteredTasks = filteredTasks.filter(
+            (task) => task.status === "cancelled"
+          );
+          break;
+        case "pending":
+          filteredTasks = filteredTasks.filter(
+            (task) => task.status === "pending"
+          );
+          break;
+        default:
+          console.log("unknown filter value");
+      }
+      return filteredTasks;
     },
     activeTasksNumber(state) {
       const activeTasks = state.tasks.filter(
@@ -83,6 +119,9 @@ export default createStore({
     activeTask(state) {
       return state.activeTask;
     },
+    selectedOption(state) {
+      return state.filterOption;
+    }
   },
   modules: {},
 });
