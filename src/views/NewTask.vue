@@ -16,7 +16,7 @@
       <textarea id="description" v-model.trim="description"></textarea>
     </div>
 
-    <button class="btn primary" type="submit">Создать</button>
+    <button :disabled="!isFormValid" class="btn primary" type="submit">Создать</button>
   </form>
 </template>
 

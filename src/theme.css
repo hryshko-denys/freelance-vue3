@@ -121,6 +121,14 @@ h3 {
     border-color: #c25205;
 }
 
+.btn.delete {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    padding: 5px 10px;
+}
+
 .container {
     margin: 0 auto;
     max-width: 1000px;
@@ -198,6 +206,7 @@ h3 {
 }
 
 .card {
+    position: relative;
     overflow: hidden;
     padding: 1rem;
     margin-bottom: 1rem;

@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 import { v4 as uuidv4 } from "uuid";
-// import createTask from './modules/createTask'
 
 export default createStore({
   state() {
@@ -22,10 +21,7 @@ export default createStore({
     CHANGE_TASK_STATUS(state, { id, status }) {
       state.tasks = state.tasks.map((task) => {
         if (task.id === id) {
-          return {
-            ...task,
-            status,
-          };
+          task.status = status
         }
 
         return task;
@@ -39,6 +35,9 @@ export default createStore({
         status,
       };
     },
+    DELETE_TASK(state, id) {
+      state.tasks = state.tasks.filter(task => task.id !== id)
+    }
   },
   actions: {
     createNewTask({ commit }, payload) {
@@ -70,24 +69,20 @@ export default createStore({
       return state.tasks !== 0;
     },
     activeTaskId(state) {
-      return state.activeTask.id;
+      return state.activeTask ? state.activeTask.id : "";
     },
     activeTaskStatus(state) {
-      console.log(state, "props.task");
-
-      return state.activeTask.status;
+      return state.activeTask ? state.activeTask.status : "";
     },
     activeTaskDate(state) {
-      return state.activeTask.date;
+      return state.activeTask ? state.activeTask.date : "";
     },
     activeTaskDescription(state) {
-      return state.activeTask.description;
+      return state.activeTask ? state.activeTask.description : "";
     },
     activeTask(state) {
       return state.activeTask;
     },
   },
-  modules: {
-    // createTask
-  },
+  modules: {},
 });

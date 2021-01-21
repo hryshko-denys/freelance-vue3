@@ -12,10 +12,13 @@
       </strong>
     </p>
     <button class="btn primary" @click="showTask">Посмотреть</button>
+    <button class="btn danger delete" @click="deleteTask">X</button>
   </div>
 </template>
 
 <script>
+import localStorage from "../Service/localStorage";
+
 import AppStatus from "../components/AppStatus";
 import { computed } from "vue";
 import { useStore } from "vuex";
@@ -28,19 +31,27 @@ export default {
     const store = useStore();
 
     function showTask() {
-      // console.log(props.task, 'props.task')
       store.commit("SET_ACTIVE_TASK", props.task);
       router.push(`/task/${props.task.id}`);
+    }
+
+    function deleteTask() {
+      const question = "Are you sure?";
+      const answer = confirm(question);
+
+      if (answer) {
+        store.commit("DELETE_TASK", props.task.id);
+
+        localStorage.updateLocalStorage(store.getters.tasks);
+      }
     }
 
     return {
       showTask,
       name: computed(() => props.task.name),
-      status: computed(() => {
-        console.log(props.task.status, 'status change')
-        return props.task.status
-      }),
+      status: computed(() => props.task.status),
       date: computed(() => props.task.date),
+      deleteTask,
     };
   },
   components: { AppStatus },
