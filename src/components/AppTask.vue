@@ -11,7 +11,7 @@
         </small>
       </strong>
     </p>
-    <button class="btn primary" @click="showTodo">Посмотреть</button>
+    <button class="btn primary" @click="showTask">Посмотреть</button>
   </div>
 </template>
 
@@ -24,14 +24,12 @@ export default {
   props: ["task"],
   setup(props) {
     const router = useRouter()
-    console.log(props.task);
 
-    function showTodo() {
+    function showTask() {
       router.push(`/task/${props.task.id}`)
-      console.log('hello')
     }
     return {
-      showTodo,
+      showTask,
       name: computed(() => props.task.name),
       status: computed(() => props.task.status),
       date: computed(() => props.task.date),

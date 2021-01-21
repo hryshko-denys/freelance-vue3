@@ -2,18 +2,17 @@ export default {
   namespaced: true,
   state() {
     return {
-      todoList: [],
+      tasks: [],
     };
   },
   mutations: {},
   actions: {
     createNewTask() {
-      console.log("action");
     }
   },
   getters: {
-    todoList(state) {
-      return state.todoList;
+    tasks(state) {
+      return state.tasks;
     }
   }
 };

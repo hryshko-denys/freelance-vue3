@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import localStorage from "../Service/localStorage";
+
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -45,7 +47,9 @@ export default {
         description,
       });
 
-      router.push('/')
+      router.push("/");
+
+      localStorage.updateLocalStorage(store.getters.tasks);
     }
 
     return {
@@ -53,7 +57,7 @@ export default {
       date,
       description,
       createNewTask,
-      isFormValid
+      isFormValid,
     };
   },
 };

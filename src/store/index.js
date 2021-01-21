@@ -1,17 +1,19 @@
 import { createStore } from "vuex";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 // import createTask from './modules/createTask'
 
 export default createStore({
   state() {
     return {
-      todoList: [],
+      tasks: [],
     };
   },
   mutations: {
-    ADD_TODO_ITEM(state, payload) {
-      state.todoList.push(payload);
-      console.log(state.todoList);
+    ADD_TASK(state, payload) {
+      state.tasks.push(payload);
+    },
+    SET_TASKS(state, tasks) {
+      state.tasks = tasks;
     },
   },
   actions: {
@@ -20,27 +22,24 @@ export default createStore({
       const currentDate = +String(now.getDate()).padStart(2, "0");
       const deadline = +payload.date.value.slice(8);
 
-      const status =
-        deadline < currentDate
-          ? { title: "Отменено", class: "warning" }
-          : { title: "Активный", class: "primary" };
-      const id = uuidv4() // TODO
+      const status = deadline < currentDate ? "cancelled" : "active";
+      const id = uuidv4();
       console.log(id);
-      commit("ADD_TODO_ITEM", { ...payload, status, id });
+      commit("ADD_TASK", { ...payload, status, id });
     },
   },
   getters: {
-    todoList(state) {
-      return state.todoList;
+    tasks(state) {
+      return state.tasks;
     },
     activeTasksNumber(state) {
-      const activeTasks = state.todoList.filter(
-        (todo) => todo.status.class === "primary"
+      const activeTasks = state.tasks.filter(
+        (task) => task.status.class === "primary"
       );
       return activeTasks.length;
     },
     hasTasks(state) {
-      return state.todoList !== 0;
+      return state.tasks !== 0;
     },
   },
   modules: {

@@ -12,6 +12,7 @@
 
 <script>
 import AppTask from "../components/AppTask";
+import localStorage from "../Service/localStorage";
 
 import { computed } from "vue";
 import { useStore } from "vuex";
@@ -20,8 +21,12 @@ export default {
   setup() {
     const store = useStore();
 
+    const tasksFromStorage = localStorage.getTasksFromStorage();
+
+    store.commit("SET_TASKS", tasksFromStorage);
+
     return {
-      tasks: computed(() => store.getters.todoList),
+      tasks: computed(() => store.getters.tasks),
       activeTasksNumber: computed(() => store.getters.activeTasksNumber),
       hasTasks: computed(() => store.getters.hasTasks),
     };

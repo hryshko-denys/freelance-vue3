@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-if="hasTodo">
+  <div class="card" v-if="hasTasks">
     <h2></h2>
     <p>
       <strong>{{ status.title }}</strong
@@ -30,24 +30,22 @@ export default {
     const store = useStore();
     const route = useRoute();
     const currentId = route.params.taskId;
-    const currentTodo = store.state.todoList.find(
-      (todo) => todo.id === currentId
-    );
+    const currentTask = store.state.tasks.find((task) => task.id === currentId);
 
     const status = computed(() => {
-      return currentTodo.status;
+      return currentTask.status;
     });
 
     const date = computed(() => {
-      return currentTodo.date;
+      return currentTask.date;
     });
 
     const description = computed(() => {
-      return currentTodo.description;
+      return currentTask.description;
     });
 
-    const hasTodo = computed(() => {
-      return !!currentTodo;
+    const hasTasks = computed(() => {
+      return !!currentTask;
     });
 
     return {
@@ -55,7 +53,7 @@ export default {
       status,
       date,
       description,
-      hasTodo
+      hasTasks,
     };
   },
   components: { AppStatus },
