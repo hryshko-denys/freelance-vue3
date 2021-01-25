@@ -7,7 +7,7 @@ import { computed } from "vue";
 export default {
   props: ["type"],
   setup(props) {
-    console.log(props, 'props')
+    console.log(props, "props");
     return {
       title: computed(() => {
         if (props.type === "active") {
